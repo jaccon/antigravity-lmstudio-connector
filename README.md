@@ -43,15 +43,31 @@ Isso irá gerar o arquivo de extensão `.vsix` (ex: `lmstudio-connector-0.0.1.vs
    
    <img src="step2.png" width="400" alt="Notificação de sucesso da instalação">
 
-## Como Configurar
+## Como Rodar e Conectar ao LM Studio (via API)
 
-1. Inicie o Server no LM Studio e verifique a URL base.
-3. No VS Code, acesse as suas opções (Settings > `antigravity.lmStudio`):
-   - **Base URL:** Confirme com o do LM Studio (padrão: `http://localhost:1234/v1`).
-   - **Chat Model:** Coloque o alias/nome do modelo que está carregado no LM Studio (padrão: `local-model`).
-   - **Autocomplete Enabled:** Marque (`true`) se quiser utilizar o autocompletamento inline.
+Para que a extensão funcione perfeitamente, o LM Studio precisa estar rodando um servidor local que simula a API da OpenAI. Siga os passos:
 
-Dica: Execute o comando `Antigravity: Test Connection` através da paleta de comandos (`Cmd+Shift+P` ou `Ctrl+Shift+P`) para validar se a conexão com o LM Studio está 100% funcional.
+### 1. Preparando o LM Studio
+1. Abra o aplicativo **LM Studio** em sua máquina.
+2. Navegue até aba **↔️ Local Server** (ícone de servidor no menu lateral esquerdo).
+3. No topo, selecione o modelo de IA que você deseja carregar para a memória.
+4. No painel da direita, certifique-se de que a opção **Cross-Origin-Resource-Sharing (CORS)** está ativada.
+5. Clique no botão azul **Start Server**.
+6. O terminal interno do LM Studio indicará que a API está ativa, normalmente na porta `1234` (ex: `http://localhost:1234/v1`).
+
+### 2. Configurando a Extensão no VS Code
+Com o servidor rodando, abra seu VS Code:
+1. Pressione `Cmd+,` (macOS) ou `Ctrl+,` (Windows/Linux) para abrir as **Settings**.
+2. Na barra de pesquisa, digite `antigravity.lmStudio`.
+3. Preencha as configurações conforme abaixo:
+   - **Base URL:** Confirme que a URL é `http://localhost:1234/v1` (se não alterou a porta).
+   - **Chat Model:** Insira o alias ou nome do modelo carregado (o LM Studio resolve automaticamente modelos recentes como `local-model` ou `default`).
+   - **Autocomplete Enabled:** Marque (`true`) para ativar e receber sugestões de código diretamente no editor de texto.
+
+### 3. Teste de Conexão
+Para ter absoluta certeza de que VS Code e LM Studio estão se conversando:
+* Pressione `Cmd+Shift+P` (ou `Ctrl+Shift+P`), pesquise pelo comando `Antigravity: Test Connection` e pressione *Enter*.
+* Uma notificação de sucesso aparecerá no canto da sua tela caso a API esteja respondendo com êxito. A sua aba lateral **LM Studio Connector** também já estará com os sistemas operantes!
 
 ## Comandos Disponíveis
 
