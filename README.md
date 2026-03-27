@@ -55,7 +55,7 @@ Para que a extensão funcione perfeitamente, o LM Studio precisa estar rodando u
 5. Clique no botão azul **Start Server**.
 6. O terminal interno do LM Studio indicará que a API está ativa, normalmente na porta `1234` (ex: `http://localhost:1234/v1`).
 
-### 2. Configurando a Extensão no VS Code
+### 2. Configurando a Extensão no VS Code / Antigravity
 Com o servidor rodando, abra seu VS Code:
 1. Pressione `Cmd+,` (macOS) ou `Ctrl+,` (Windows/Linux) para abrir as **Settings**.
 2. Na barra de pesquisa, digite `antigravity.lmStudio`.
