@@ -20,10 +20,32 @@ Tudo isso rodando localmente usando modelos de linguagem abertos, garantindo tot
    - Porta padrão: `1234`
    - Deve suportar as rotas OpenAI-compatíveis: `/v1/chat/completions` (para o Chat) e `/v1/completions` (para o autocompletamento).
 
+## Instalação (Offline com VSIX)
+
+### Como gerar o arquivo VSIX (Opcional)
+Se você não encontrou o arquivo `.vsix` na pasta (por exemplo, após baixar o código-fonte pelo GitHub), você pode compilá-lo manualmente. Abra o terminal na raiz do projeto e rode:
+```bash
+npm install -g @vscode/vsce
+npm install
+vsce package
+```
+Isso irá gerar o arquivo de extensão `.vsix` (ex: `lmstudio-connector-0.0.1.vsix`).
+
+### Passo a passo de instalação no VS Code
+
+1. **Acesse a aba de Extensões:** Abra o Visual Studio Code. Na barra lateral esquerda, clique no ícone de *Extensões* (`Ctrl+Shift+X` ou `Cmd+Shift+X`).
+2. **Selecione "Install from VSIX...":** No painel de Extensões, clique no ícone de três pontos `...` (Views and More Actions) no canto superior direito do menu lateral e selecione a opção **Install from VSIX...**.
+   
+   <img src="step1.png" width="400" alt="Menu Install from VSIX no VS Code">
+
+3. **Navegue até o arquivo:** Uma janela será aberta. Navegue até o diretório onde o arquivo `.vsix` se encontra e selecione-o.
+4. **Instalação Concluída:** Um aviso aparecerá no canto inferior direito informando que a extensão foi instalada com sucesso.
+   
+   <img src="step2.png" width="400" alt="Notificação de sucesso da instalação">
+
 ## Como Configurar
 
-1. Instale a extensão no VS Code.
-2. Inicie o Server no LM Studio e verifique a URL base.
+1. Inicie o Server no LM Studio e verifique a URL base.
 3. No VS Code, acesse as suas opções (Settings > `antigravity.lmStudio`):
    - **Base URL:** Confirme com o do LM Studio (padrão: `http://localhost:1234/v1`).
    - **Chat Model:** Coloque o alias/nome do modelo que está carregado no LM Studio (padrão: `local-model`).

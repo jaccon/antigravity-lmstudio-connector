@@ -106,6 +106,7 @@
         .step:nth-child(2) { animation-delay: 0.25s; }
         .step:nth-child(3) { animation-delay: 0.4s; }
         .step:nth-child(4) { animation-delay: 0.55s; }
+        .step:nth-child(5) { animation-delay: 0.70s; }
 
         .step:hover {
             border-color: rgba(139, 148, 158, 0.4);
@@ -220,25 +221,33 @@
         <div class="steps-wrapper">
             <div class="step">
                 <div class="step-number">1</div>
+                <h2>Como gerar o arquivo VSIX (Opcional)</h2>
+                <p>Se você não encontrou o arquivo <code>.vsix</code> na pasta (por exemplo, após baixar o código), você mesmo pode criá-lo. Basta abrir o terminal na raiz do projeto e rodar o comando abaixo para instalar a ferramenta oficial do VS Code e empacotar a extensão:</p>
+                <code>npm install -g @vscode/vsce && npm install && vsce package</code>
+                <p style="margin-top: 1rem; color: var(--text-secondary);">Isso irá gerar um arquivo parecido com <code>lmstudio-connector-0.0.1.vsix</code> na pasta.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
                 <h2>Acesse a aba de Extensões</h2>
                 <p>Abra o Visual Studio Code. Na barra lateral esquerda, clique no ícone de <strong>Extensões</strong> ou use o atalho de teclado <code>Ctrl+Shift+X</code> (Windows/Linux) ou <code>Cmd+Shift+X</code> (macOS).</p>
             </div>
 
             <div class="step">
-                <div class="step-number">2</div>
+                <div class="step-number">3</div>
                 <h2>Selecione "Install from VSIX..."</h2>
                 <p>No painel de Extensões, clique no ícone de três pontos <code>...</code> (Views and More Actions) localizado no canto superior direito do menu lateral e selecione a opção <strong>Install from VSIX...</strong>.</p>
                 <img src="step1.png" alt="Menu Install from VSIX no VS Code">
             </div>
 
             <div class="step">
-                <div class="step-number">3</div>
+                <div class="step-number">4</div>
                 <h2>Navegue até o arquivo</h2>
                 <p>Uma janela do explorador de arquivos será aberta. Navegue até o local onde você salvou o arquivo de extensão <code>.vsix</code> do Antigravity LM Studio Connect e selecione-o para instalar.</p>
             </div>
 
             <div class="step">
-                <div class="step-number">4</div>
+                <div class="step-number">5</div>
                 <h2>Instalação Concluída</h2>
                 <p>Aguarde alguns segundos. O Visual Studio Code exibirá uma notificação no canto inferior direito informando que a extensão foi instalada com sucesso. Você já pode começar a utilizá-la!</p>
                 <img src="step2.png" alt="Notificação de sucesso da instalação">
