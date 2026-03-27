@@ -1,0 +1,110 @@
+{
+  "name": "lmstudio-connector",
+  "displayName": "Antigravity LM Studio Connect developed by Jaccon",
+  "description": "VSCode extension compatible with Antigravity to connect to local LM Studio for chat and autocomplete",
+  "version": "0.0.1",
+  "publisher": "jaccon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jaccon/lmstudio-connector"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Machine Learning",
+    "Programming Languages"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "antigravity.helloWorld",
+        "title": "Antigravity: Hello World",
+        "category": "Antigravity"
+      },
+      {
+        "command": "antigravity.startChat",
+        "title": "Antigravity: Start Code Chat",
+        "category": "Antigravity"
+      },
+      {
+        "command": "antigravity.testConnection",
+        "title": "Antigravity: Test Connection",
+        "category": "Antigravity"
+      }
+    ],
+    "configuration": {
+      "title": "Antigravity LM Studio Connect developed by Jaccon",
+      "properties": {
+        "antigravity.lmStudio.url": {
+          "type": "string",
+          "default": "http://localhost:1234/v1",
+          "description": "The base URL for local LM Studio API"
+        },
+        "antigravity.lmStudio.chatModel": {
+          "type": "string",
+          "default": "local-model",
+          "description": "The model to use for chat generation"
+        },
+        "antigravity.lmStudio.autocompleteEnabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable inline autocomplete using LM Studio"
+        }
+      }
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "antigravityPanel",
+          "title": "LM Studio Connector",
+          "icon": "media/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "antigravityPanel": [
+        {
+          "type": "webview",
+          "id": "antigravity.chatView",
+          "name": "LM Studio Connector",
+          "icon": "media/icon.svg"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "20.2.5",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "eslint": "^8.41.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "ts-loader": "^9.4.3",
+    "typescript": "^5.1.3",
+    "webpack": "^5.85.0",
+    "webpack-cli": "^5.1.1"
+  },
+  "dependencies": {
+    "node-fetch": "^3.3.1",
+    "uuid": "^13.0.0"
+  }
+}

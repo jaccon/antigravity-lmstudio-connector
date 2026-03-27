@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instalação do Antigravity LM Studio</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg-color: #0d1117;
+            --surface: rgba(22, 27, 34, 0.7);
+            --surface-border: rgba(48, 54, 61, 0.8);
+            --text-primary: #e6edf3;
+            --text-secondary: #8b949e;
+            --accent: #58a6ff;
+            --accent-glow: rgba(88, 166, 255, 0.25);
+            --success: #238636;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            background-image: 
+                radial-gradient(circle at 10% 40%, rgba(88, 166, 255, 0.05), transparent 30%),
+                radial-gradient(circle at 90% 60%, rgba(35, 134, 54, 0.05), transparent 30%);
+            background-attachment: fixed;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 90%;
+            margin: 5rem auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a5b1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .steps-wrapper {
+            position: relative;
+        }
+
+        .steps-wrapper::before {
+            content: '';
+            position: absolute;
+            left: 2.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--surface-border);
+            z-index: 0;
+            display: none; /* Can be enabled for desktop view */
+        }
+
+        @media (min-width: 768px) {
+            .steps-wrapper::before {
+                display: block;
+                left: 2rem;
+            }
+        }
+
+        .step {
+            background: var(--surface);
+            border: 1px solid var(--surface-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            z-index: 1;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .step:nth-child(1) { animation-delay: 0.1s; }
+        .step:nth-child(2) { animation-delay: 0.25s; }
+        .step:nth-child(3) { animation-delay: 0.4s; }
+        .step:nth-child(4) { animation-delay: 0.55s; }
+
+        .step:hover {
+            border-color: rgba(139, 148, 158, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4), 0 0 20px var(--accent-glow);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 2.5rem;
+            background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 12px var(--accent-glow);
+            border: 2px solid var(--bg-color);
+        }
+
+        @media (min-width: 768px) {
+            .step {
+                margin-left: 4.5rem;
+            }
+            .step-number {
+                left: -2.5rem;
+                top: 50%;
+                transform: translateY(-50%);
+                border: 4px solid var(--bg-color);
+            }
+            .step:hover .step-number {
+                transform: translateY(-50%) scale(1.1);
+                transition: transform 0.3s ease;
+            }
+        }
+
+        .step h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .step img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid var(--surface-border);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+            display: block;
+        }
+        
+        .step img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        code {
+            background: rgba(110, 118, 129, 0.2);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.9em;
+            color: var(--text-primary);
+            border: 1px solid rgba(139, 148, 158, 0.2);
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .alert {
+            background: rgba(35, 134, 54, 0.1);
+            border-left: 4px solid var(--success);
+            padding: 1rem 1.5rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1.5rem;
+            color: #e6edf3;
+            font-size: 0.95rem;
+        }
+        
+        .alert strong {
+            color: #3fb950;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Instalação Offline</h1>
+            <p>Guia passo a passo para instalar a extensão <strong>Antigravity LM Studio Connect</strong> no seu Visual Studio Code manualmente através do pacote VSIX.</p>
+        </header>
+
+        <div class="steps-wrapper">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h2>Acesse a aba de Extensões</h2>
+                <p>Abra o Visual Studio Code. Na barra lateral esquerda, clique no ícone de <strong>Extensões</strong> ou use o atalho de teclado <code>Ctrl+Shift+X</code> (Windows/Linux) ou <code>Cmd+Shift+X</code> (macOS).</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h2>Selecione "Install from VSIX..."</h2>
+                <p>No painel de Extensões, clique no ícone de três pontos <code>...</code> (Views and More Actions) localizado no canto superior direito do menu lateral e selecione a opção <strong>Install from VSIX...</strong>.</p>
+                <img src="step1.png" alt="Menu Install from VSIX no VS Code">
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h2>Navegue até o arquivo</h2>
+                <p>Uma janela do explorador de arquivos será aberta. Navegue até o local onde você salvou o arquivo de extensão <code>.vsix</code> do Antigravity LM Studio Connect e selecione-o para instalar.</p>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h2>Instalação Concluída</h2>
+                <p>Aguarde alguns segundos. O Visual Studio Code exibirá uma notificação no canto inferior direito informando que a extensão foi instalada com sucesso. Você já pode começar a utilizá-la!</p>
+                <img src="step2.png" alt="Notificação de sucesso da instalação">
+                
+                <div class="alert">
+                    <strong>Tudo pronto!</strong> Agora, basta abrir as configurações da extensão e configurar a URL ou porta local do seu LM Studio para estabelecer a conexão correta.
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
