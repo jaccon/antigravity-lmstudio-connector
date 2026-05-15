@@ -1,67 +1,67 @@
-# Documentação Técnica: Como funciona o Antigravity LM Studio Connect
+# Documentation Technique : Comment fonctionne Antigravity LM Studio Connect
 
-Bem-vindo à área de desenvolvedor. Este documento visa explicar passo a passo toda a arquitetura e funcionamento por trás da extensão **Antigravity LM Studio Connect** desenvolvida por **Jaccon**. O foco é facilitar a publicação na [VSCode Extensions Marketplace](https://marketplace.visualstudio.com/) e a compatibilidade do modelo de sistema para o sistema operacional interno do **Antigravity**.
+Bienvenue dans l'espace développeur. Ce document vise à expliquer étape par étape toute l'architecture et le fonctionnement de l'extension **Antigravity LM Studio Connect** développée par **Jaccon**. L'objectif est de faciliter la publication sur le [VSCode Extensions Marketplace](https://marketplace.visualstudio.com/) et la compatibilité du modèle de système pour le système d'exploitation interne d'**Antigravity**.
 
-A extensão foi projetada de forma modular no TypeScript e interage com as APIs do Visual Studio Code. A seguir estão abertos os segredos por trás da extensão.
+L'extension a été conçue de manière modulaire en TypeScript et interagit avec les API de Visual Studio Code. Voici les secrets de l'extension.
 
-## Estrutura de Arquivos Principal: `src`
+## Structure Principale des Fichiers : `src`
 
-Todo o core da aplicação reside em três arquivos na pasta `src/`:
+L'intégralité du cœur de l'application réside dans trois fichiers dans le dossier `src/` :
 
-1. `extension.ts` (Entrypoint e Eventos Globais)
-2. `chatWebview.ts` (Interface do Chat e Lógica de Substituição de Código)
-3. `completionProvider.ts` (Máquina de Autocompletamento)
-
----
-
-### 1. `extension.ts`: O Ponto de Ativação
-
-O `extension.ts` atua como o **maestro** da orquestra, responsável por gerenciar toda a infraestrutura base quando a extensão inicializa (ativada pelo evento `onStartupFinished`).
-
-**Principais tarefas efetuadas neste arquivo:**
-- **Healthcheck Automatizado:** No momento de carregamento inicial, há uma verificação à URL local definida para testar as rotas via `/models`. Se o node constata o servidor (LM Studio, neste caso, o `status 200`), ele apresenta um popup verde indicando "Conectado ao LM Studio com sucesso!".
-- **Registro do Provider UI (WebviewView):** Injeta no componente Sidebar (Activity Bar, ID: `antigravityPanel`) a tela customizada HTML desenvolvida em `chatWebview.ts`.
-- **Registro do Inline Completion Provider:** Caso a chave `antigravity.lmStudio.autocompleteEnabled` esteja ativada nas opções de Settings, ele liga o módulo `completionProvider.ts` à API nativa do VS Code (`vscode.languages.registerInlineCompletionItemProvider`), habilitando escuta total sob todas as linhas de código alteradas.
-- **Registro de Comandos de Ação:** Registra na paleta de comandos atalhos como o `antigravity.startChat` e o `antigravity.testConnection`.
+1. `extension.ts` (Point d'entrée et Événements Globaux)
+2. `chatWebview.ts` (Interface de Chat et Logique de Remplacement de Code)
+3. `completionProvider.ts` (Moteur d'Autocomplétion)
 
 ---
 
-### 2. `chatWebview.ts`: A Fronteira Interativa
+### 1. `extension.ts` : Le Point d'Activation
 
-Sua comunicação com o LM Studio durante o chat passa obrigatoriamente pelo `chatWebview.ts`. Este arquivo estende `vscode.WebviewViewProvider` e retorna um HTML/CSS minimalista injetado no ambiente do explorador do VSCode e contém a lógica de postMessages de ida e vinda da aplicação.
+Le fichier `extension.ts` agit comme le **chef d'orchestre**, responsable de la gestion de toute l'infrastructure de base lorsque l'extension s'initialise (activée par l'événement `onStartupFinished`).
 
-**Arquitetura do `handleChatMessage`:**
-- **Extração do Contexto Dinâmico:** Antes de ser enviada ao LMStudio, a mensagem localiza qual aba de texto o desenvolvedor possui focada (`activeEditor`).
-- **Limitação de Memória Segura (Clamp):** Ele captura todo o código que está ativo na janela (limitado a 20 mil caracteres para evitar Out of Memory e estouros de contexto) concatenando num `System Prompt`.
-- **Comportamentos Autônomos Específicos (<tags>):** A IA é instruída a se comportar de forma injetora usando as XML tags. Se a IA responder com blocos delimitados, o `chatWebview` fará a leitura (via Expressão Regular).
-  - Se detectado um encapsulamento em `<create_file>`, será acionado o Workspace do VS Code criando uma nova tab do zero contendo aquele código sugerido.
-  - Se detectado um `<edit_file>`, o código da aba local sofrerá bypass, sofrendo sobreescrita ou *replace* em tempo real.
-- **Requisição REST via Node-Fetch:** O disparo das conversas é serializado via JSON de ponta-a-ponta batendo na URI de chat do seu servidor (`/chat/completions`). Assim ocorre a animação de "Antigravity is thinking...".
-
-**O front-end embutido (UI do Code Chat):**
-A API do VS Code disponibiliza um método seguro de renderização do Markdown. Todos os code blocks (` ``` `) exibidos ganham botões integrados e de callback atômico graças a customizações HTML:
-- Botão "Insert" – Escreve o snippet na linha atual do cursor no active file.
-- Botão "Replace" – Extermina todo o código daquele arquivo e troca pelo snippet apresentado.
-- Botão "New File" – Abre dinamicamente a aba temporária gerando os binários no cache sem salvar.
+**Principales tâches effectuées dans ce fichier :**
+- **Healthcheck Automatisé :** Au moment du chargement initial, une vérification est faite à l'URL locale définie pour tester les routes via `/models`. Si le nœud détecte le serveur (LM Studio, dans ce cas, le `status 200`), il affiche une popup verte indiquant "Connecté à LM Studio avec succès !".
+- **Enregistrement du Provider UI (WebviewView) :** Injecte dans le composant Sidebar (Barre d'Activité, ID : `antigravityPanel`) l'écran HTML personnalisé développé dans `chatWebview.ts`.
+- **Enregistrement du Provider Inline Completion :** Si la clé `antigravity.lmStudio.autocompleteEnabled` est activée dans les paramètres (Settings), il relie le module `completionProvider.ts` à l'API native de VS Code (`vscode.languages.registerInlineCompletionItemProvider`), permettant une écoute totale sur toutes les lignes de code modifiées.
+- **Enregistrement des Commandes d'Action :** Enregistre dans la palette de commandes des raccourcis tels que `antigravity.startChat` et `antigravity.testConnection`.
 
 ---
 
-### 3. `completionProvider.ts`: Inteligência e "Ghost Text" Realtime
+### 2. `chatWebview.ts` : La Frontière Interactive
 
-O Autocomplete obedece ao contrato da API original do Visual Studio Code para completamento (`vscode.InlineCompletionItemProvider`). Diferente de um plugin como Copilot, ele interage exclusivamente com a interface local.
+Votre communication avec LM Studio pendant le chat passe obligatoirement par `chatWebview.ts`. Ce fichier étend `vscode.WebviewViewProvider` et renvoie un HTML/CSS minimaliste injecté dans l'environnement de l'explorateur VSCode, contenant la logique des postMessages (aller-retour) de l'application.
 
-**Proteção Lógica Interna:**
-- **Debouncing:** Implementado um atraso via `setTimeout` em 500 ms; portanto apenas quando o desenvolvedor finaliza uma certa quantia de digitação, enviamos request à rede. Do contrário os servidores locais crashariam.
-- **Fatiamento de Texto Anterior/Posterior (Prefix and Suffix):** Identificamos precisamente onde o cursor ("position") está. Cortamos as linhas acima de forma literal, simulando a técnica rudimentar de "Fill-in-the-Middle" ou Autocomplete Sequencial.
-- **O Payload de Previsão:** Este endpoint aponta para a rota genérica do LLM (`/completions` invés da `/chat/completions`), exigindo completamento passivo base, com parada de token via `['\n\n', '<|endoftext|>']`.
+**Architecture de `handleChatMessage` :**
+- **Extraction du Contexte Dynamique :** Avant d'être envoyé à LMStudio, le message localise quel onglet de texte le développeur a mis en focus (`activeEditor`).
+- **Limitation de Mémoire Sécurisée (Clamp) :** Il capture tout le code qui est actif dans la fenêtre (limité à 20 000 caractères pour éviter les "Out of Memory" et les dépassements de contexte) en le concaténant dans un `System Prompt`.
+- **Comportements Autonomes Spécifiques (<tags>) :** L'IA a pour instruction de se comporter de manière à injecter en utilisant des balises XML. Si l'IA répond avec des blocs délimités, `chatWebview` les lira (via des Expressions Régulières).
+  - S'il détecte une encapsulation dans `<create_file>`, il déclenchera le Workspace de VS Code pour créer un nouvel onglet à partir de zéro contenant le code suggéré.
+  - S'il détecte un `<edit_file>`, le code de l'onglet local subira un bypass, avec écrasement ou remplacement en temps réel.
+- **Requête REST via Node-Fetch :** Le déclenchement des conversations est sérialisé via JSON de bout en bout, frappant l'URI de chat de votre serveur (`/chat/completions`). C'est ainsi que se produit l'animation "Antigravity is thinking...".
+
+**Le front-end intégré (UI du Code Chat) :**
+L'API de VS Code fournit une méthode sécurisée de rendu Markdown. Tous les blocs de code (` ``` `) affichés sont dotés de boutons intégrés avec rappel atomique (callback) grâce à des personnalisations HTML :
+- Bouton "Insert" (Insérer) – Écrit le snippet (extrait de code) sur la ligne actuelle du curseur dans le fichier actif.
+- Bouton "Replace" (Remplacer) – Efface tout le code de ce fichier et le remplace par le snippet présenté.
+- Bouton "New File" (Nouveau Fichier) – Ouvre dynamiquement l'onglet temporaire en générant les binaires dans le cache sans sauvegarder.
 
 ---
 
-## O Fluxo Macro - Do Setup ao Runtime
+### 3. `completionProvider.ts` : Intelligence et "Ghost Text" en Temps Réel
 
-1. **Ativação (ActivationEvent = onStartupFinished):** A janela renderiza.
-2. **Setup do Setting Configuration:** Inicialização definindo variáveis globais registradas no seu VS Code Settings para IP:Porta apontado.
-3. **Escuta de Modificações (Listener):** O Code Chat Sidebar instacia-se na background thread enquanto o Provider do autocompletamento levanta com o cursor.
-4. **Requisições Fetch & Promises:** Envio transitorio dos eventos na porta 1234 e parse do resultado.
+L'Autocomplete (Autocomplétion) respecte le contrat de l'API originale de Visual Studio Code pour la complétion (`vscode.InlineCompletionItemProvider`). Contrairement à un plugin comme Copilot, il interagit exclusivement avec l'interface locale.
 
-A extensão está encapsulada para que futuramente possa ser versionada e indexada não apenas compatível com LM Studio, mas com OLLAMA e outras tecnologias de ponte API local, graças à adoção nativa do schema Open-AI compatible payload.
+**Protection Logique Interne :**
+- **Debouncing :** Implémentation d'un délai (via `setTimeout`) de 500 ms ; nous n'envoyons donc une requête au réseau que lorsque le développeur a terminé une certaine quantité de frappe. Sinon, les serveurs locaux planteraient.
+- **Découpage de Texte Précédent/Suivant (Préfixe et Suffixe) :** Nous identifions précisément où se trouve le curseur ("position"). Nous coupons littéralement les lignes au-dessus, simulant la technique rudimentaire de "Fill-in-the-Middle" ou d'Autocomplétion Séquentielle.
+- **Le Payload de Prédiction :** Ce point de terminaison pointe vers la route générique du LLM (`/completions` au lieu de `/chat/completions`), nécessitant une complétion de base passive, avec un arrêt de token via `['\n\n', '<|endoftext|>']`.
+
+---
+
+## Le Flux Global - Du Setup au Runtime
+
+1. **Activation (ActivationEvent = onStartupFinished) :** La fenêtre effectue le rendu.
+2. **Configuration des Paramètres (Settings) :** Initialisation définissant des variables globales enregistrées dans vos paramètres VS Code pour cibler IP:Port.
+3. **Écoute des Modifications (Listener) :** La barre latérale de Code Chat s'instancie en arrière-plan (background thread) tandis que le Provider d'autocomplétion s'active avec le curseur.
+4. **Requêtes Fetch & Promesses (Promises) :** Envoi transitoire des événements sur le port 1234 et analyse (parse) du résultat.
+
+L'extension est encapsulée pour qu'elle puisse à l'avenir être versionnée et indexée pour être compatible non seulement avec LM Studio, mais aussi avec OLLAMA et d'autres technologies de pont API local, grâce à l'adoption native du schéma compatible avec le payload d'OpenAI.

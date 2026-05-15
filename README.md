@@ -1,86 +1,86 @@
 # Antigravity LM Studio Connect
 
-O **Antigravity LM Studio Connect** (desenvolvido por Jaccon) é uma extensão poderosa para o Visual Studio Code projetada para integrar perfeitamente o seu fluxo de desenvolvimento local de IA com o **LM Studio**. A extensão oferece funcionalidades avançadas de chat, edição automática de código baseada em contexto e autocompletamento de código em tempo real (inline completion).
+**Antigravity LM Studio Connect** (développé par Jaccon) est une extension puissante pour Visual Studio Code conçue pour intégrer parfaitement votre flux de développement local d'IA avec **LM Studio**. L'extension offre des fonctionnalités avancées de chat, d'édition automatique de code basée sur le contexte et d'autocomplétion de code en temps réel (inline completion).
 
-Tudo isso rodando localmente usando modelos de linguagem abertos, garantindo total privacidade do seu código fonte e isenção de custos com APIs.
+Tout cela fonctionne localement en utilisant des modèles de langage ouverts, garantissant une confidentialité totale de votre code source et l'absence de coûts liés aux API.
 
-## Funcionalidades Principais
+## Fonctionnalités Principales
 
-- **Chat com IA no Sidebar do VSCode:** Uma aba dedicada ("LM Studio Connector") no seu Activity Bar para conversar com a IA.
-- **Contextualização com o Arquivo Ativo:** A extensão compartilha de maneira inteligente o conteúdo do arquivo que você está editando no momento, permitindo que a IA compreenda o contexto sem você precisar copiar e colar.
-- **Inserção e Edição Direta (Code Actions):** A interface de chat disponibiliza botões para `Insert`, `Replace` ou criar um `New File` diretamente com o código sugerido pela IA, acelerando seu desenvolvimento.
-- **Modificação Automática (Auto-apply):** A IA entende comandos especiais (tags como `<create_file>` ou `<edit_file>`) e pode criar novos arquivos ou até aplicar alterações no documento inteiro automaticamente conforme sua solicitação.
-- **Autocompletamento em Tempo Real (Inline Completion):** Conforme você digita, a extensão se comunica com o LM Studio para prever e sugerir continuações de código baseadas no contexto ao redor.
+- **Chat avec l'IA dans la barre latérale de VSCode :** Un onglet dédié ("LM Studio Connector") dans votre barre d'activité pour discuter avec l'IA.
+- **Contextualisation avec le Fichier Actif :** L'extension partage intelligemment le contenu du fichier que vous êtes en train d'éditer, permettant à l'IA de comprendre le contexte sans que vous n'ayez besoin de copier-coller.
+- **Insertion et Édition Directes (Code Actions) :** L'interface de chat propose des boutons pour `Insert` (Insérer), `Replace` (Remplacer) ou créer un `New File` (Nouveau Fichier) directement avec le code suggéré par l'IA, accélérant ainsi votre développement.
+- **Modification Automatique (Auto-apply) :** L'IA comprend des commandes spéciales (balises comme `<create_file>` ou `<edit_file>`) et peut créer de nouveaux fichiers ou même appliquer des modifications à l'ensemble du document automatiquement selon votre demande.
+- **Autocomplétion en Temps Réel (Inline Completion) :** Au fur et à mesure que vous tapez, l'extension communique avec LM Studio pour prédire et suggérer des suites de code basées sur le contexte environnant.
 
-## Requisitos
+## Prérequis
 
-1. **Visual Studio Code** (versão 1.80.0 ou superior).
-2. [O LM Studio](https://lmstudio.ai) instalado e rodando em sua máquina local.
-3. Servidor Local (Local Server) em execução no LM Studio:
-   - Porta padrão: `1234`
-   - Deve suportar as rotas OpenAI-compatíveis: `/v1/chat/completions` (para o Chat) e `/v1/completions` (para o autocompletamento).
+1. **Visual Studio Code** (version 1.80.0 ou supérieure).
+2. [LM Studio](https://lmstudio.ai) installé et en cours d'exécution sur votre machine locale.
+3. Serveur Local (Local Server) en cours d'exécution dans LM Studio :
+   - Port par défaut : `1234`
+   - Doit supporter les routes compatibles OpenAI : `/v1/chat/completions` (pour le Chat) et `/v1/completions` (pour l'autocomplétion).
 
-## Instalação (Offline com VSIX)
+## Installation (Hors ligne avec VSIX)
 
-### Como gerar o arquivo VSIX (Opcional)
-Se você não encontrou o arquivo `.vsix` na pasta (por exemplo, após baixar o código-fonte pelo GitHub), você pode compilá-lo manualmente. Abra o terminal na raiz do projeto e rode:
+### Comment générer le fichier VSIX (Optionnel)
+Si vous ne trouvez pas le fichier `.vsix` dans le dossier (par exemple, après avoir téléchargé le code source depuis GitHub), vous pouvez le compiler manuellement. Ouvrez le terminal à la racine du projet et exécutez :
 ```bash
 npm install -g @vscode/vsce
 npm install
 vsce package
 ```
-Isso irá gerar o arquivo de extensão `.vsix` (ex: `lmstudio-connector-0.0.1.vsix`).
+Cela générera le fichier d'extension `.vsix` (ex : `lmstudio-connector-0.0.1.vsix`).
 
-### Passo a passo de instalação no VS Code
+### Étapes d'installation dans VS Code
 
-1. **Acesse a aba de Extensões:** Abra o Visual Studio Code. Na barra lateral esquerda, clique no ícone de *Extensões* (`Ctrl+Shift+X` ou `Cmd+Shift+X`).
-2. **Selecione "Install from VSIX...":** No painel de Extensões, clique no ícone de três pontos `...` (Views and More Actions) no canto superior direito do menu lateral e selecione a opção **Install from VSIX...**.
+1. **Accéder à l'onglet Extensions :** Ouvrez Visual Studio Code. Dans la barre latérale gauche, cliquez sur l'icône *Extensions* (`Ctrl+Shift+X` ou `Cmd+Shift+X`).
+2. **Sélectionner "Install from VSIX..." :** Dans le panneau des Extensions, cliquez sur l'icône des trois points `...` (Views and More Actions) en haut à droite du menu latéral et sélectionnez l'option **Install from VSIX...**.
    
-   <img src="step1.png" width="400" alt="Menu Install from VSIX no VS Code">
+   <img src="step1.png" width="400" alt="Menu Install from VSIX dans VS Code">
 
-3. **Navegue até o arquivo:** Uma janela será aberta. Navegue até o diretório onde o arquivo `.vsix` se encontra e selecione-o.
-4. **Instalação Concluída:** Um aviso aparecerá no canto inferior direito informando que a extensão foi instalada com sucesso.
+3. **Naviguer vers le fichier :** Une fenêtre s'ouvrira. Naviguez jusqu'au répertoire où se trouve le fichier `.vsix` et sélectionnez-le.
+4. **Installation Terminée :** Une notification apparaîtra dans le coin inférieur droit vous informant que l'extension a été installée avec succès.
    
-   <img src="step2.png" width="400" alt="Notificação de sucesso da instalação">
+   <img src="step2.png" width="400" alt="Notification de succès de l'installation">
 
-## Como Rodar e Conectar ao LM Studio (via API)
+## Comment Exécuter et se Connecter à LM Studio (via API)
 
-Para que a extensão funcione perfeitamente, o LM Studio precisa estar rodando um servidor local que simula a API da OpenAI. Siga os passos:
+Pour que l'extension fonctionne parfaitement, LM Studio doit exécuter un serveur local qui simule l'API d'OpenAI. Suivez ces étapes :
 
-### 1. Preparando o LM Studio
-1. Abra o aplicativo **LM Studio** em sua máquina.
-2. Navegue até aba **↔️ Local Server** (ícone de servidor no menu lateral esquerdo).
-3. No topo, selecione o modelo de IA que você deseja carregar para a memória.
-4. No painel da direita, certifique-se de que a opção **Cross-Origin-Resource-Sharing (CORS)** está ativada.
-5. Clique no botão azul **Start Server**.
-6. O terminal interno do LM Studio indicará que a API está ativa, normalmente na porta `1234` (ex: `http://localhost:1234/v1`).
+### 1. Préparation de LM Studio
+1. Ouvrez l'application **LM Studio** sur votre machine.
+2. Accédez à l'onglet **↔️ Local Server** (icône de serveur dans le menu latéral gauche).
+3. En haut, sélectionnez le modèle d'IA que vous souhaitez charger en mémoire.
+4. Dans le panneau de droite, assurez-vous que l'option **Cross-Origin-Resource-Sharing (CORS)** est activée.
+5. Cliquez sur le bouton bleu **Start Server**.
+6. Le terminal interne de LM Studio indiquera que l'API est active, généralement sur le port `1234` (ex : `http://localhost:1234/v1`).
 
-### 2. Configurando a Extensão no VS Code / Antigravity
-Com o servidor rodando, abra seu VS Code:
-1. Pressione `Cmd+,` (macOS) ou `Ctrl+,` (Windows/Linux) para abrir as **Settings**.
-2. Na barra de pesquisa, digite `antigravity.lmStudio`.
-3. Preencha as configurações conforme abaixo:
-   - **Base URL:** Confirme que a URL é `http://localhost:1234/v1` (se não alterou a porta).
-   - **Chat Model:** Insira o alias ou nome do modelo carregado (o LM Studio resolve automaticamente modelos recentes como `local-model` ou `default`).
-   - **Autocomplete Enabled:** Marque (`true`) para ativar e receber sugestões de código diretamente no editor de texto.
+### 2. Configuration de l'Extension dans VS Code / Antigravity
+Avec le serveur en cours d'exécution, ouvrez votre VS Code :
+1. Appuyez sur `Cmd+,` (macOS) ou `Ctrl+,` (Windows/Linux) pour ouvrir les **Paramètres (Settings)**.
+2. Dans la barre de recherche, tapez `antigravity.lmStudio`.
+3. Remplissez les configurations comme ci-dessous :
+   - **Base URL :** Confirmez que l'URL est `http://localhost:1234/v1` (si vous n'avez pas changé le port).
+   - **Chat Model :** Saisissez l'alias ou le nom du modèle chargé (LM Studio résout automatiquement les modèles récents comme `local-model` ou `default`).
+   - **Autocomplete Enabled :** Cochez (`true`) pour activer et recevoir des suggestions de code directement dans l'éditeur de texte.
 
-### 3. Teste de Conexão
-Para ter absoluta certeza de que VS Code e LM Studio estão se conversando:
-* Pressione `Cmd+Shift+P` (ou `Ctrl+Shift+P`), pesquise pelo comando `Antigravity: Test Connection` e pressione *Enter*.
-* Uma notificação de sucesso aparecerá no canto da sua tela caso a API esteja respondendo com êxito. A sua aba lateral **LM Studio Connector** também já estará com os sistemas operantes!
+### 3. Test de Connexion
+Pour être absolument certain que VS Code et LM Studio communiquent :
+* Appuyez sur `Cmd+Shift+P` (ou `Ctrl+Shift+P`), recherchez la commande `Antigravity: Test Connection` et appuyez sur *Entrée*.
+* Une notification de succès apparaîtra dans le coin de votre écran si l'API répond avec succès. Votre onglet latéral **LM Studio Connector** sera également opérationnel !
 
-## Comandos Disponíveis
+## Commandes Disponibles
 
-Ao abrir a paleta de comandos do VS Code, os seguintes comandos estão disponíveis:
-- `Antigravity: Hello World` - Comando básico de teste da extensão.
-- `Antigravity: Start Code Chat` - Abre e foca a janela webview do chat na barra lateral.
-- `Antigravity: Test Connection` - Faz um healthcheck (verificação de conexão) na API em execução do LM Studio.
+En ouvrant la palette de commandes de VS Code, les commandes suivantes sont disponibles :
+- `Antigravity: Hello World` - Commande de test de base de l'extension.
+- `Antigravity: Start Code Chat` - Ouvre et met le focus sur la fenêtre webview du chat dans la barre latérale.
+- `Antigravity: Test Connection` - Effectue une vérification de l'état (healthcheck) sur l'API en cours d'exécution de LM Studio.
 
-## Privacidade e Segurança
+## Confidentialité et Sécurité
 
-Seus dados não saem da sua máquina! Diferente de assistentes convencionais da nuvem, o Antigravity LM Studio interage exclusivamente com a rede local (`localhost`), processando todo o código fonte e as conversas de forma estritamente local, conferindo o mais alto grau de segurança para desenvolvimento de propriedade intelectual ou trabalhar sob regras estritas de não-vazamento de dados corporativos (NDA).
+Vos données ne quittent pas votre machine ! Contrairement aux assistants cloud conventionnels, Antigravity LM Studio interagit exclusivement avec le réseau local (`localhost`), traitant tout le code source et les conversations de manière strictement locale, offrant le plus haut degré de sécurité pour le développement de propriété intellectuelle ou pour travailler selon des règles strictes de non-divulgation de données d'entreprise (NDA).
 
-## Contribuição e Feedback
+## Contribution et Retour d'information
 
-Sinta-se à vontade para reportar issues ou enviar PRs com melhorias para a integração da extensão.
-Desenvolvido com ☕️ e IA por Jaccon.
+N'hésitez pas à signaler des problèmes (issues) ou à envoyer des PR (Pull Requests) avec des améliorations pour l'intégration de l'extension.
+Développé avec ☕️ et de l'IA par Jaccon.

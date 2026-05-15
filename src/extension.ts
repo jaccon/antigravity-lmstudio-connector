@@ -8,28 +8,28 @@ async function checkHealth() {
   const url = config.get<string>('url', 'http://localhost:1234/v1');
 
   try {
-    // Chamamos o endpoint de models para testar se há resposta válida do LM Studio
+    // Nous appelons le point de terminaison de models pour tester s'il y a une réponse valide de LM Studio
     const response = await fetch(`${url}/models`);
     if (response.ok) {
-      vscode.window.showInformationMessage('✅ Conectado ao LM Studio com sucesso!');
+      vscode.window.showInformationMessage('✅ Connecté à LM Studio avec succès !');
     } else {
-      vscode.window.showWarningMessage(`⚠️ O LM Studio respondeu, mas com erro: ${response.status}`);
+      vscode.window.showWarningMessage(`⚠️ LM Studio a répondu, mais avec une erreur : ${response.status}`);
     }
   } catch (error) {
-    vscode.window.showErrorMessage('❌ Falha ao conectar no LM Studio. Verifique se ele está rodando na URL configurada e o servidor local ativo.');
+    vscode.window.showErrorMessage('❌ Échec de la connexion à LM Studio. Vérifiez s\'il est en cours d\'exécution sur l\'URL configurée et que le serveur local est actif.');
   }
 }
 
 export function activate(context: vscode.ExtensionContext) {
   console.log('Congratulations, your extension "antigravity-lm-studio" is now active!');
 
-  // Healthcheck na iniciação
+  // Bilan de santé au démarrage
   checkHealth();
 
-  // Comando para testar manualmente a conexão
+  // Commande pour tester manuellement la connexion
   context.subscriptions.push(
     vscode.commands.registerCommand('antigravity.testConnection', () => {
-      vscode.window.showInformationMessage('Testando conexão com LM Studio...');
+      vscode.window.showInformationMessage('Test de la connexion avec LM Studio...');
       checkHealth();
     })
   );

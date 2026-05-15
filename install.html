@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="fr-FR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instalação do Antigravity LM Studio</title>
+    <title>Installation d'Antigravity LM Studio</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
@@ -214,46 +214,46 @@
 
     <div class="container">
         <header>
-            <h1>Instalação Offline</h1>
-            <p>Guia passo a passo para instalar a extensão <strong>Antigravity LM Studio Connect</strong> no seu Visual Studio Code manualmente através do pacote VSIX.</p>
+            <h1>Installation Hors Ligne</h1>
+            <p>Guide étape par étape pour installer manuellement l'extension <strong>Antigravity LM Studio Connect</strong> dans votre Visual Studio Code via le paquet VSIX.</p>
         </header>
 
         <div class="steps-wrapper">
             <div class="step">
                 <div class="step-number">1</div>
-                <h2>Como gerar o arquivo VSIX (Opcional)</h2>
-                <p>Se você não encontrou o arquivo <code>.vsix</code> na pasta (por exemplo, após baixar o código), você mesmo pode criá-lo. Basta abrir o terminal na raiz do projeto e rodar o comando abaixo para instalar a ferramenta oficial do VS Code e empacotar a extensão:</p>
+                <h2>Comment générer le fichier VSIX (Optionnel)</h2>
+                <p>Si vous ne trouvez pas le fichier <code>.vsix</code> dans le dossier (par exemple, après avoir téléchargé le code), vous pouvez le créer vous-même. Il suffit d'ouvrir le terminal à la racine du projet et d'exécuter la commande ci-dessous pour installer l'outil officiel de VS Code et empaqueter l'extension :</p>
                 <code>npm install -g @vscode/vsce && npm install && vsce package</code>
-                <p style="margin-top: 1rem; color: var(--text-secondary);">Isso irá gerar um arquivo parecido com <code>lmstudio-connector-0.0.1.vsix</code> na pasta.</p>
+                <p style="margin-top: 1rem; color: var(--text-secondary);">Cela générera un fichier ressemblant à <code>lmstudio-connector-0.0.1.vsix</code> dans le dossier.</p>
             </div>
 
             <div class="step">
                 <div class="step-number">2</div>
-                <h2>Acesse a aba de Extensões</h2>
-                <p>Abra o Visual Studio Code. Na barra lateral esquerda, clique no ícone de <strong>Extensões</strong> ou use o atalho de teclado <code>Ctrl+Shift+X</code> (Windows/Linux) ou <code>Cmd+Shift+X</code> (macOS).</p>
+                <h2>Accédez à l'onglet Extensions</h2>
+                <p>Ouvrez Visual Studio Code. Dans la barre latérale gauche, cliquez sur l'icône <strong>Extensions</strong> ou utilisez le raccourci clavier <code>Ctrl+Shift+X</code> (Windows/Linux) ou <code>Cmd+Shift+X</code> (macOS).</p>
             </div>
 
             <div class="step">
                 <div class="step-number">3</div>
-                <h2>Selecione "Install from VSIX..."</h2>
-                <p>No painel de Extensões, clique no ícone de três pontos <code>...</code> (Views and More Actions) localizado no canto superior direito do menu lateral e selecione a opção <strong>Install from VSIX...</strong>.</p>
-                <img src="step1.png" alt="Menu Install from VSIX no VS Code">
+                <h2>Sélectionnez "Install from VSIX..."</h2>
+                <p>Dans le panneau des Extensions, cliquez sur l'icône des trois points <code>...</code> (Views and More Actions) située dans le coin supérieur droit du menu latéral et sélectionnez l'option <strong>Install from VSIX...</strong>.</p>
+                <img src="step1.png" alt="Menu Install from VSIX dans VS Code">
             </div>
 
             <div class="step">
                 <div class="step-number">4</div>
-                <h2>Navegue até o arquivo</h2>
-                <p>Uma janela do explorador de arquivos será aberta. Navegue até o local onde você salvou o arquivo de extensão <code>.vsix</code> do Antigravity LM Studio Connect e selecione-o para instalar.</p>
+                <h2>Naviguez jusqu'au fichier</h2>
+                <p>Une fenêtre d'explorateur de fichiers s'ouvrira. Naviguez jusqu'à l'emplacement où vous avez enregistré le fichier d'extension <code>.vsix</code> d'Antigravity LM Studio Connect et sélectionnez-le pour l'installer.</p>
             </div>
 
             <div class="step">
                 <div class="step-number">5</div>
-                <h2>Instalação Concluída</h2>
-                <p>Aguarde alguns segundos. O Visual Studio Code exibirá uma notificação no canto inferior direito informando que a extensão foi instalada com sucesso. Você já pode começar a utilizá-la!</p>
-                <img src="step2.png" alt="Notificação de sucesso da instalação">
+                <h2>Installation Terminée</h2>
+                <p>Patientez quelques secondes. Visual Studio Code affichera une notification dans le coin inférieur droit vous informant que l'extension a été installée avec succès. Vous pouvez maintenant commencer à l'utiliser !</p>
+                <img src="step2.png" alt="Notification de succès de l'installation">
                 
                 <div class="alert">
-                    <strong>Tudo pronto!</strong> Agora, basta abrir as configurações da extensão e configurar a URL ou porta local do seu LM Studio para estabelecer a conexão correta.
+                    <strong>Tout est prêt !</strong> Maintenant, il vous suffit d'ouvrir les paramètres de l'extension et de configurer l'URL ou le port local de votre LM Studio pour établir la connexion correcte.
                 </div>
             </div>
         </div>

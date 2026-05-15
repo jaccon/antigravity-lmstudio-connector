@@ -1,82 +1,82 @@
-# Como Publicar a sua Extensão (VSCode e Antigravity)
+# Comment Publier votre Extension (VSCode et Antigravity)
 
-Este documento foi elaborado para guiar você, passo a passo, no processo de empacotamento, publicação e distribuição da extensão **Antigravity LM Studio Connect** (desenvolvido por Jaccon), permitindo que outros desenvolvedores possam baixá-la tanto pelo Marketplace do Visual Studio Code quanto utilizá-la dentro do ecossistema do Antigravity.
+Ce document a été élaboré pour vous guider, étape par étape, dans le processus de création de paquet (packaging), de publication et de distribution de l'extension **Antigravity LM Studio Connect** (développée par Jaccon), permettant à d'autres développeurs de la télécharger depuis le Marketplace de Visual Studio Code ou de l'utiliser au sein de l'écosystème Antigravity.
 
 ---
 
-## Parte 1: Publicando no Visual Studio Code Marketplace
+## Partie 1 : Publication sur le Marketplace Visual Studio Code
 
-A Microsoft fornece uma ferramenta oficial de linha de comando chamada **vsce** (Visual Studio Code Extensions), que gerencia a publicação das extensões.
+Microsoft fournit un outil officiel en ligne de commande appelé **vsce** (Visual Studio Code Extensions), qui gère la publication des extensions.
 
-### Passo 1: Pré-requisitos
-1. Você precisa ter o instalador global do `vsce` na sua máquina. Abra seu terminal e rode:
+### Étape 1 : Prérequis
+1. Vous devez avoir l'installateur global de `vsce` sur votre machine. Ouvrez votre terminal et exécutez :
    ```bash
    npm install -g @vscode/vsce
    ```
-2. Crie uma [Conta de Desenvolvedor na Microsoft (Azure DevOps)](https://dev.azure.com/).
-3. Obtenha um **Personal Access Token (PAT)** no Azure DevOps para validar quem é o responsável pela publicação. Crie uma organização e navegue em "Security > Personal access tokens".
-   - **Escopo necessário (Scopes):** `Marketplace (Acquire, Manage, Publish)`.
-4. Crie um Creador/Publisher acessando a página oficial do [Visual Studio Marketplace Management](https://marketplace.visualstudio.com/manage) e faça login. Crie um novo `Publisher` com o nome da sua escolha (por exemplo, `jaccon`).
+2. Créez un [Compte Développeur chez Microsoft (Azure DevOps)](https://dev.azure.com/).
+3. Obtenez un **Personal Access Token (PAT)** dans Azure DevOps pour valider qui est responsable de la publication. Créez une organisation et accédez à "Security > Personal access tokens".
+   - **Portées requises (Scopes) :** `Marketplace (Acquire, Manage, Publish)`.
+4. Créez un Éditeur (Publisher) en accédant à la page officielle de [Visual Studio Marketplace Management](https://marketplace.visualstudio.com/manage) et connectez-vous. Créez un nouveau `Publisher` avec le nom de votre choix (par exemple, `jaccon`).
 
-### Passo 2: Empacotando (Testando o Build)
-Antes de enviar, é uma boa ideia criar e testar o binário da extensão localmente utilizando o formato padrão da loja para extensões da Microsoft.
+### Étape 2 : Empaquetage (Test du Build)
+Avant d'envoyer, il est judicieux de créer et de tester le binaire de l'extension localement en utilisant le format standard du store pour les extensions Microsoft.
 
-1. No terminal, na raiz do projeto, acione o vsce:
+1. Dans le terminal, à la racine du projet, lancez vsce :
    ```bash
    vsce package
    ```
-2. Se aparecer erros (por exemplo, exigindo um campo obrigatório como o campo `publisher` ou a URL do seu logo/repo no `package.json`), arrume-os. 
-   > Não se esqueça: Seu `package.json` **deve** possuir a tag `"publisher": "seunome_de_publisher"`. 
-3. Caso o comando acima seja acionado com sucesso, ele criará um arquivo chamado: `antigravity-lm-studio-0.0.1.vsix`. 
-   Você já pode testá-lo no VSCode com `Cmd+Shift+P` -> `Extensions: Install from VSIX...`
+2. Si des erreurs apparaissent (par exemple, si un champ obligatoire tel que le champ `publisher` ou l'URL de votre logo/repo dans `package.json` est manquant), corrigez-les. 
+   > N'oubliez pas : Votre `package.json` **doit** comporter la balise `"publisher": "votre_nom_editeur"`. 
+3. Si la commande ci-dessus s'exécute avec succès, elle créera un fichier nommé : `antigravity-lm-studio-0.0.1.vsix`. 
+   Vous pouvez déjà le tester dans VSCode avec `Cmd+Shift+P` -> `Extensions: Install from VSIX...`
 
-### Passo 3: Publicando (Fazendo o Deploy para os outros)
-Agora que sua extensão empacota e você já possui o token em mãos:
+### Étape 3 : Publication (Déploiement pour les autres)
+Maintenant que votre extension est empaquetée et que vous avez votre token en main :
 
-1. Faça o Login no cli do vsce informando seu nome do publisher logado na loja:
+1. Connectez-vous à la CLI de vsce en renseignant le nom de votre éditeur tel qu'enregistré dans le store :
    ```bash
-   vsce login seu-nome-de-publisher
+   vsce login votre-nom-editeur
    ```
-   *Ele vai pedir o Personal Access Token da Microsoft e vincular os acessos no seu terminal.*
+   *Il vous demandera le Personal Access Token de Microsoft et liera les accès à votre terminal.*
 
-2. Publique no Marketplace! Você pode fazer isso disparando o simples comando:
+2. Publiez sur le Marketplace ! Vous pouvez le faire en lançant la simple commande :
    ```bash
    vsce publish
    ```
-Pronto! Daqui em alguns minutos a sua extensão começará a indexar dentro da tela interna de extensões de todos os programadores que buscarem por **"Antigravity LM Studio"**.
+Voilà ! D'ici quelques minutes, votre extension commencera à être indexée dans l'écran interne des extensions de tous les programmeurs recherchant **"Antigravity LM Studio"**.
 
 ---
 
-## Parte 2: Disponibilizando a Extensão no Ecossistema Antigravity
+## Partie 2 : Rendre l'Extension disponible dans l'Écosystème Antigravity
 
-Qualquer integração com o Antigravity IDE aproveita uma sinergia 100% nativa com o esqueleto do Visual Studio Code. Distribuições da família VSCode usualmente usam duas rotas para importação de Extensões pela infraestrutura do Antigravity:
+Toute intégration avec Antigravity IDE bénéficie d'une synergie 100% native avec le squelette de Visual Studio Code. Les distributions de la famille VSCode utilisent généralement deux méthodes pour l'importation d'extensions par l'infrastructure Antigravity :
 
-### Opção A: Lojas Descentralizadas (Open VSX) e Atualização Automática
-O Antigravity, por padrão, enxerga os repositórios compatíveis com Open VSX ou espelhos do Microsoft VSCode.
-1. Se sua extensão já publicou na loja da Microsoft (Etapa acima), você pode sincronizá-la ou usar o sistema central CLI chamado `ovsx`:
+### Option A : Stores Décentralisés (Open VSX) et Mise à Jour Automatique
+Par défaut, Antigravity voit les dépôts compatibles avec Open VSX ou les miroirs de Microsoft VSCode.
+1. Si votre extension a déjà été publiée sur le store Microsoft (étape ci-dessus), vous pouvez la synchroniser ou utiliser le système CLI central appelé `ovsx` :
    ```bash
-   npx ovsx publish package.vsix -p <SEU_TOKEN_OPENVSX>
+   npx ovsx publish package.vsix -p <VOTRE_TOKEN_OPENVSX>
    ```
-   Dessa forma ambos os universos estarão baixando de repos transparentes.
+   De cette façon, les deux univers téléchargeront à partir de dépôts transparents.
 
-### Opção B: Arquivo Executável Independente (.VSIX) 
-Caso o Antigravity da sua equipe trabalhe em uma infraestrutura trancada, ou para ambientes offline (onde as IAs e APIs já são executadas apenas no Localhost LM Studio):
+### Option B : Fichier Exécutable Indépendant (.VSIX) 
+Dans le cas où l'Antigravity de votre équipe fonctionne sur une infrastructure fermée, ou pour des environnements hors ligne (où les IA et API s'exécutent uniquement sur Localhost LM Studio) :
 
-1. Gere o arquivo executável offline da extensão descrita no passo anterior, digitando:
+1. Générez le fichier exécutable hors ligne de l'extension décrit à l'étape précédente, en tapant :
    ```bash
    vsce package
    ```
-2. Compartilhe o arquivo gerado (exemplo: `antigravity-lm-studio-X.X.X.vsix`) gerado na raiz da pasta deste projeto via chat/e-mail, ou colocando na sua página do Github Releases.
-3. Seus colegas podem abrir o Antigravity Desktop deles e instalarem nativamente, da seguinte forma:
-   - Ir para o Painel de Extensões na Lateral Esquerda do Antigravity.
-   - Clicar nos `...` (três pontos) listados no canto superior direito do menu.
-   - Selecionar a Opção: **"Install from VSIX"**.
-   - Selecionar o seu arquivo que você enciou pra eles e aguardar o `Restart Required`.
+2. Partagez le fichier généré (exemple : `antigravity-lm-studio-X.X.X.vsix`) à la racine du dossier de ce projet via chat/e-mail, ou en le plaçant sur votre page Github Releases.
+3. Vos collègues peuvent ouvrir leur Antigravity Desktop et l'installer nativement de la manière suivante :
+   - Aller dans le panneau Extensions dans la barre latérale gauche d'Antigravity.
+   - Cliquer sur les `...` (trois points) listés en haut à droite du menu.
+   - Sélectionner l'option : **"Install from VSIX"**.
+   - Sélectionner le fichier que vous leur avez envoyé et attendre que le `Restart Required` (Redémarrage requis) apparaisse.
 
 ---
 
-## Resumo dos Passos a executar
-1. Adicione a chave `"publisher"` no seu `package.json` *(Ex: `"publisher": "jaccon"`)*.
-2. Adicione links do seu repositório *(Ex: `"repository": {"type": "git", "url": "https://github.com/jaccon/..."}`)* para prevenir os avisos no terminal.
-3. Rode `npm run lint` e veja se todos os códigos estão limpos (Typescript não avisa problemas ao empacotar).
-4. Siga os comandos de `vsce package` ou `publish` para gerar a versão final para o mundo!
+## Résumé des Étapes à suivre
+1. Ajoutez la clé `"publisher"` dans votre `package.json` *(Ex : `"publisher": "jaccon"`)*.
+2. Ajoutez des liens vers votre dépôt *(Ex : `"repository": {"type": "git", "url": "https://github.com/jaccon/..."}`)* pour éviter les avertissements dans le terminal.
+3. Exécutez `npm run lint` et vérifiez que tout le code est propre (Typescript ne signale pas les problèmes lors de l'empaquetage).
+4. Suivez les commandes `vsce package` ou `publish` pour générer la version finale pour le monde !
